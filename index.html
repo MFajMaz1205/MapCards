@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Booster de Cartes Géographiques</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Librairie P2P Gun.js pour le multijoueur sans serveur -->
+    <script src="https://cdn.jsdelivr.net/npm/gun/gun.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Mon Booster de Cartes</h1>
+        
+        <!-- Barre d'infos joueur & Navigation -->
+        <div class="top-bar">
+            <div class="player-stats">
+                <span>👤 <b id="player-name" onclick="changePseudo()" title="Cliquer pour changer de pseudo">Joueur</b></span>
+                <span class="coins-badge">🪙 <b id="player-coins">300</b> GéoCoins</span>
+            </div>
+
+            <div class="nav-tabs">
+                <button class="tab-btn active" id="tab-collection" onclick="switchTab('collection')">Ma Collection (<span id="collection-count">0</span>)</button>
+                <button class="tab-btn" id="tab-market" onclick="switchTab('market')">Marketplace</button>
+            </div>
+        </div>
+
+        <div id="booster-action-zone">
+            <button id="generate-btn" onclick="openBoosterModal()">Ouvrir un Booster (100 🪙)</button>
+            <button class="bonus-btn" onclick="claimFreeCoins()">+50 🪙 Gratuits</button>
+        </div>
+    </header>
+
+    <!-- ONGLET 1 : MA COLLECTION -->
+    <div id="collection-view" class="view-section">
+        <div id="cards-container"></div>
+    </div>
+
+    <!-- ONGLET 2 : MARKETPLACE MULTIJOUEUR -->
+    <div id="market-view" class="view-section" style="display: none;">
+        <p class="market-info">🌍 Achète et vends des cartes en temps réel avec les autres joueurs connectés.</p>
+        <div id="market-container"></div>
+    </div>
+
+    <!-- MODALE DE CHARGEMENT & RÉVÉLATION DU BOOSTER -->
+    <div id="booster-overlay">
+        <div class="booster-modal-content">
+            
+            <!-- ÉTAPE 1 : Chargement avec phrases qui défilent -->
+            <div id="loading-view">
+                <div class="spinner"></div>
+                <div class="loading-phrase" id="loading-phrase">Initialisation du satellite...</div>
+                <div class="loading-sub">Génération de 5 lieux uniques en parallèle</div>
+            </div>
+
+            <!-- ÉTAPE 2 : Révélation des 5 cartes du booster -->
+            <div id="reveal-view" style="display: none;">
+                <div class="booster-modal-title">✨ Contenu du Booster ✨</div>
+                <div id="booster-cards-preview" class="booster-grid"></div>
+                <button id="collect-btn" class="collect-btn" onclick="collectBoosterCards()">Ajouter les 5 cartes à ma collection</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
